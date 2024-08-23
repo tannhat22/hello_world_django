@@ -1,0 +1,63 @@
+1. Tạo project Django: django-admin startproject tên_project
+
+2. Tạo app: B1: cd project_folder/
+            B2: python manage.py startapp tên_app
+
+3. Tạo migrations: python manage.py makemigrations tên_app
+   Xem Scripts tạo SQL: python manage.py sqlmigrate tên_app tên_file_migration
+   Tạo lược đồ CSDL: python manage.py migrate
+
+4. Meta options của model:
+    . abstract: thiết lập lớp model là trừu tượng (tránh tạo bảng trong CSDL cho model)
+    . db_table: chỉ định tên bảng
+    . ordering: chỉ định các  trường dùng để sắp xếp khi truy vấn dữ liệu. Mặc định là sắp xếp tăng nếu thêm dấu "-" trước tên trường là sắp xếp giảm
+    . unique_together: thiết lập ràng buộc giá trị duy nhất cho nhiều trường kết hợp
+    . constraints: thiết lập một số ràng buộc trong CSDL
+
+5. Quan hệ many to many:
+    . Sử dụng lớp ManyToManyField bắt buộc một đối số là model có liên quan trong quan hệ
+    . Các thuộc tính quan trọng:
+        + related_name: tương tự ForeignKey (đổi tên khi truy vấn)
+        + related_query_name: tương tự ForeignKey
+        + throught: chỉ định bảng model trung gian cho quan hệ ManyToMany
+        + symmetrical: sử dụng khi định nghĩa quan hệ ManyToMany đến chính nó
+
+6. Truy vấn dữ liệu:
+    . count(): số đối tượng trong QuerySet
+    . latest(): trả về đối tượng cuối trong QuerySet dựa trên trường chỉ định
+    . earliest(): ngược lại với latest()
+    . first(): trả về đối tượng đầu tiên trong QuerySet
+    . last(): trả về đối tượng cuối trong QuerySet
+    . exists(): kiểm tra QuerySet có tồn tại kết quả nào không
+    . aggregate(): thống kê cho QuerySet (sum, max)
+    . filter(): lọc dữ liệu
+    . exclude(): loại bỏ dữ liệu
+    . all(): lấy tất cả dữ liệu
+    . order_by(): sắp xếp dữ liệu
+
+    * Mặc định các điều kiện trong filter hoặc exclude sẽ liên kết bằng phép AND. Để thực hiện các truy vấn phức tạp
+    hơn sử dụng Q(). Các Q có thể kết hợp với nhau bằng phép & hoặc |
+      vd: Course.objects.filter(Q(created_date__year=2020)|Q(subject__icontains='lập trình')) 
+
+    * Một số field lookups chỉ định điều kiện:
+        - exact và iexact
+        - contains và icontains
+        - in
+        - gt, gte, lt, lte, range
+        - startswith, istartswith, endswith, iendswith
+        - regex, iregex
+        - date, year, month, day, hour, minute, second
+
+7. Tạo supper User: python manage.py createsuperuser
+
+8. InlineModelAdmin:
+    . Các InlineModelAdmin cho phép chỉnh sửa nhiều model có quan hệ với nhau trong cùng một trang của model cha
+    . Một số lớp dạng này:
+        - InlineModelAdmin
+        - TabularInline
+        - StackedInline
+    * Trang admin có thể custom rất nhiều hãy đọc thêm Documents
+
+
+
+
