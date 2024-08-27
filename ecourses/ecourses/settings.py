@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'rest_framework',
     'oauth2_provider',
+    'drf_spectacular',
+    'debug_toolbar',
 ]
 
 REST_FRAMEWORK = {
@@ -49,7 +51,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': '2',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'E-course API',
+    'DESCRIPTION': 'All API of project Ecourse for study django',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
 
 MIDDLEWARE = [
@@ -60,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'ecourses.urls'
@@ -133,11 +145,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 MEDIA_ROOT = '%s/courses/static' % BASE_DIR
 
 CKEDITOR_UPLOAD_PATH = 'lessons/'
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

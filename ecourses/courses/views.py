@@ -1,11 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 from django.http import HttpResponse
 from django.views import View
 
-from .models import Course, Lesson, Tag
+from .models import Course, Lesson, Tag, User
 from .serializers import *
 
 # Create your views here.
@@ -25,6 +26,18 @@ class TestView(View):
 
     def post(self, request):
         pass
+
+class UserViewSet(viewsets.ViewSet, 
+                  generics.CreateAPIView,
+                  generics.RetrieveAPIView):
+    queryset = User.objects.filter(is_active=True)
+    serializer_class = UserSerializer
+    parser_classes = [MultiPartParser,]
+
+    def get_permissions(self):
+        if self.action == 'retrieve':
+            return [permissions.IsAuthenticated()]
+        return [permissions.AllowAny()]
 
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.filter(active=True)

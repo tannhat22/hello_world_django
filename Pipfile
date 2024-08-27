@@ -10,6 +10,8 @@ pillow = "*"
 django-ckeditor = "*"
 djangorestframework = "*"
 django-oauth-toolkit = "*"
+django-debug-toolbar = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
