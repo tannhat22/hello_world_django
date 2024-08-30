@@ -12,6 +12,9 @@ djangorestframework = "*"
 django-oauth-toolkit = "*"
 django-debug-toolbar = "*"
 drf-spectacular = "*"
+whitenoise = "*"
+django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
 
 [dev-packages]
 
